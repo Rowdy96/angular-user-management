@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
-import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { Observable, of } from 'rxjs';
+import { HttpClient } from '@angular/common/http';
+import { Observable} from 'rxjs';
 import { User } from '../models/user.model'
 
 @Injectable({
@@ -9,10 +9,6 @@ import { User } from '../models/user.model'
 export class UserService {
 
   baseUrl: string;
-
-  httpOptions = {
-    headers: new HttpHeaders({ 'Content-Type': 'application/json' })
-  };
 
   constructor(private http : HttpClient) { 
     this.baseUrl = 'api/users';

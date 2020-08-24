@@ -21,6 +21,8 @@ export class SignupComponent implements OnInit {
   addOnBlur :  boolean;
   imageBlob: string;
   user: User;
+  isHobbieSectionCliked: boolean;
+  
   readonly separatorKeysCodes: number[] = [ENTER, COMMA];
 
   constructor(private router: Router , private userService: UserService) 
@@ -28,11 +30,11 @@ export class SignupComponent implements OnInit {
     this.firstName = '';
     this.lastName = '';
     this.user =  new User();
-    this.user.gender = 'Male'
+    this.user.gender = 'Male';
     this.hobbies = new Array<string>();
     this.removable = true;
     this.selectable = true;
-
+    this.isHobbieSectionCliked = false;
   }
 
   ngOnInit() {
@@ -60,17 +62,21 @@ export class SignupComponent implements OnInit {
   }
 
   getImageFile(event): void{
+    
     let file = event.target.files[0];
     let reader = new FileReader();
     reader.readAsDataURL(file);
     reader.onload = () => {
       this.imageBlob = reader.result.toString();
-      console.log(this.imageBlob);
       this.user.photo = this.imageBlob;
     };
     reader.onerror = function (error) {
       console.log('Error: ', error);
     };
+  }
+
+  onClick(): void{
+    this.isHobbieSectionCliked = true;
   }
 
   resgister():void{

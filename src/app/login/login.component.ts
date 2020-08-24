@@ -1,4 +1,4 @@
-import { Component, OnInit, DoCheck } from '@angular/core';
+import { Component, OnInit, DoCheck} from '@angular/core';
 import { Router } from '@angular/router';
 import { AccountService } from '../authentication-services/account.service'
 
@@ -7,7 +7,7 @@ import { AccountService } from '../authentication-services/account.service'
   templateUrl: './login.component.html',
   styleUrls: ['./login.component.css']
 })
-export class LoginComponent implements OnInit, DoCheck {
+export class LoginComponent implements OnInit,DoCheck {
 
   email: string;
   password: string;
@@ -21,18 +21,31 @@ export class LoginComponent implements OnInit, DoCheck {
     this.email = '';
     this.loginError = '';
   }
+  ngDoCheck(): void {
+    // if(this.loginError.length !== 0 && (this.email || this.password)){
+    //   this.loginError='';
+    // }
+  }
 
   ngOnInit(): void {
   
   }
 
-  ngDoCheck(): void {
-    this.loginError = this.accountService.loginError;
-  }
-
-
   login(): void {
-    this.accountService.login(this.email,this.password);
-    this.router.navigate(['users']);
+    this.accountService.login(this.email,this.password).subscribe(
+      res =>{
+        if(res.length === 0){
+          this.router.navigate(['users']);
+        }
+        else
+        {
+          this.loginError = res;
+        }
+      },
+      err =>{
+        this.loginError = err;
+      }
+    );
   }
+
 }

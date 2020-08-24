@@ -9,10 +9,10 @@
   <button mat-button *ngIf="currentUser.email !== undefined" (click)="logout()">
     Logout
   </button>
-  <button mat-button *ngIf="currentUser.email ===  undefined" routerLink="login">
+  <button mat-button *ngIf="currentUser ===  undefined || currentUser.email === undefined" routerLink="login">
     Login
   </button>
-  <button mat-button *ngIf="currentUser.email === undefined" routerLink="signup">
+  <button mat-button *ngIf="currentUser === undefined || currentUser.email === undefined" routerLink="signup">
     Sign up
   </button>
 </mat-toolbar>
