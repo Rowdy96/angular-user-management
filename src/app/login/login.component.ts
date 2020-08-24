@@ -18,7 +18,6 @@ export class LoginComponent implements OnInit,DoCheck {
   {
     this.showSpinner = false;
     this.password ='';
-    this.email = '';
     this.loginError = '';
   }
   ngDoCheck(): void {
