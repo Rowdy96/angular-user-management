@@ -1,0 +1,69 @@
+<div class="center-div">
+    <mat-card class="user-card">
+      <mat-card-header>
+        <mat-card-title>Login</mat-card-title>
+      </mat-card-header>
+      <mat-card-content>
+  
+          <mat-form-field class="input-full-width">
+            <mat-label>First Name</mat-label>
+            <input matInput placeholder="First Name" [(ngModel)]="firstName" type="text" name="firstName" required>
+          </mat-form-field>
+          
+          <mat-form-field class="input-full-width">
+            <mat-label>Last Name</mat-label>
+            <input matInput placeholder="Last Name" [(ngModel)]="lastName" type="text" name="lastName" required>
+          </mat-form-field>
+          
+          <mat-form-field class="input-full-width">
+            <mat-label>Email</mat-label>
+            <input matInput placeholder="Email" [(ngModel)]="user.email" type="email" name="email" required>
+          </mat-form-field>
+  
+          <mat-form-field class="input-full-width">
+            <mat-label>Password</mat-label>
+            <input matInput placeholder="Password" [(ngModel)]="user.password" type="password" name="password" required>
+          </mat-form-field>
+          
+          <section class="example-section">
+              <mat-label class="example-margin">Gender:</mat-label>
+              <mat-radio-group [(ngModel)]="user.gender">
+                <mat-radio-button class="example-margin" value="Male">Male</mat-radio-button>
+                <mat-radio-button class="example-margin" value="Female">Female</mat-radio-button>
+              </mat-radio-group>
+
+            <mat-form-field>
+              <mat-label>Date of Birth</mat-label>
+              <input matInput [matDatepicker]="picker" [(ngModel)]="user.dateOfBirth" placeholder="choose a date" style="margin-left: 10;">
+              <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+              <mat-datepicker #picker></mat-datepicker>
+            </mat-form-field>
+          </section>
+  
+          <mat-form-field class="input-full-width">
+            <mat-chip-list #chipList>
+              <mat-chip *ngFor="let hobbie of hobbies" [selectable]="selectable"
+                       [removable]="removable" (removed)="remove(hobbie)">
+                {{hobbie}}
+                <mat-icon matChipRemove *ngIf="removable">cancel</mat-icon>
+              </mat-chip>
+              <input placeholder="Hobbie"
+                     [matChipInputFor]="chipList"
+                     [matChipInputSeparatorKeyCodes]="separatorKeysCodes"
+                     [matChipInputAddOnBlur]="addOnBlur"
+                     (matChipInputTokenEnd)="add($event)">
+            </mat-chip-list>
+          </mat-form-field>
+  
+          <label>Profile Photo:</label>
+          <br>
+          <img [src]="imageBlob" style="height: 100px; border-radius: 50%;"> 
+          <br>
+          <input type="file" accept="image/jpeg,image/png" (change)="getImageFile($event)"/>
+          
+      </mat-card-content>
+      <mat-card-actions>
+        <button mat-raised-button (click)="resgister()" color="primary">Login</button>
+      </mat-card-actions>
+    </mat-card>
+  </div>

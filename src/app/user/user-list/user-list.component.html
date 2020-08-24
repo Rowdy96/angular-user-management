@@ -1,0 +1,36 @@
+<div class="center-div">
+  <table mat-table [dataSource]="dataSource" class="mat-elevation-z8">
+  
+     <!-- Name Column -->
+     <ng-container matColumnDef="photo">
+      <th mat-header-cell *matHeaderCellDef> Profile </th>
+      <td mat-cell *matCellDef="let user">
+        <img [src]="user.photo" style="height: 50px; border-radius: 50%;" />
+      </td>
+    </ng-container>
+
+    <!-- Name Column -->
+    <ng-container matColumnDef="name">
+      <th mat-header-cell *matHeaderCellDef> Name </th>
+      <td mat-cell *matCellDef="let user"> {{user.name}} </td>
+    </ng-container>
+  
+    <!-- Weight Column -->
+    <ng-container matColumnDef="email">
+      <th mat-header-cell *matHeaderCellDef> Email </th>
+      <td mat-cell *matCellDef="let user"> {{user.email}} </td>
+    </ng-container>
+  
+    <!-- Symbol Column -->
+    <ng-container matColumnDef="edit">
+      <th mat-header-cell *matHeaderCellDef> Edit </th>
+      <td mat-cell *matCellDef="let user">
+        <button mat-raised-button (click)="onClick(user.id)" color="primary">Edit</button>
+      </td>
+    </ng-container>
+  
+    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+    <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+  </table>
+  
+</div>
