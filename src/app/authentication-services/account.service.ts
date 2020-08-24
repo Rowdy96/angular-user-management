@@ -15,7 +15,12 @@ export class AccountService {
   {
     this.currentUser = new User();
   }
-
+  
+  /**
+   * This method is used to login the user
+   * @param email is user email.
+   * @param password is user password..
+   */
   login(email: string, password: string): Observable<string>{
     let error = '';
      return this.userService.getUseres().pipe(map(
@@ -30,6 +35,7 @@ export class AccountService {
        },
        err =>{
          error = 'Something went wrong. Please try again!';
+         return error;
        }
      ));
     

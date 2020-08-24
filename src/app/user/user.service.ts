@@ -14,35 +14,33 @@ export class UserService {
     this.baseUrl = 'api/users';
   }
 
-  /** GET Useres from the server */
+  /** 
+   * GET Useres from the server.
+   */
   getUseres(): Observable<User[]> {
     return this.http.get<User[]>(this.baseUrl);
   }
 
-  /** GET User by id. Will 404 if id not found */
+  /** 
+   * GET User by id. Will 404 if id not found.
+   * @param id of user.
+   */
   getUser(id: number): Observable<User> {
     const url = `${this.baseUrl}/${id}`;
     return this.http.get<User>(url);
   }
 
-  //////// Save methods //////////
-
-  /** POST: add a new User to the server */
+  /**
+   *  add a new User to the server.
+   *  @param user object of user.
+   */
   addUser(user: User): Observable<User> {
     return this.http.post<User>(this.baseUrl, user);
   }
 
-  /** DELETE: delete the User from the server */
-  deleteUser(User: User | number): Observable<User> {
-    const id = typeof User === 'number' ? User : User.id;
-    const url = `${this.baseUrl}/${id}`;
-
-    return this.http.delete<User>(url);
-  }
-
   /**
-   * Update the user details in the server
-   * @param user object of user
+   * Update the user details in the server.
+   * @param user object of user.
    */
   updateUser(user: User): Observable<any> {
     return this.http.put(this.baseUrl, user);

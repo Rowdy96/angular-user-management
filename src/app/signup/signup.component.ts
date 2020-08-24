@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { Router } from '@angular/router';
 import {COMMA, ENTER} from '@angular/cdk/keycodes';
 import { User } from 'src/app/models/user.model'
@@ -10,7 +10,7 @@ import { UserService } from '../user/user.service';
   templateUrl: './signup.component.html',
   styleUrls: ['./signup.component.css']
 })
-export class SignupComponent implements OnInit {
+export class SignupComponent {
 
   firstName: string;
   lastName: string;
@@ -37,9 +37,10 @@ export class SignupComponent implements OnInit {
     this.isHobbieSectionCliked = false;
   }
 
-  ngOnInit() {
-  }
-
+  /**
+   * This methos is used to add hobby to user's hobby list.
+   * @param event is to get hobbie.
+   */
   add(event): void {
     const input = event.input;
     const value = event.value;
@@ -53,6 +54,10 @@ export class SignupComponent implements OnInit {
     }
   }
 
+  /**
+   * This method is used to remove hobbie from hobby list of user.
+   * @param hobbie is hobbie name.
+   */
   remove(hobbie: string): void {
     const index = this.hobbies.indexOf(hobbie);
 
@@ -61,6 +66,10 @@ export class SignupComponent implements OnInit {
     }
   }
 
+  /**
+   * This method is used to get image file and convert image to base64.
+   * @param event is get image file.
+   */
   getImageFile(event): void{
     
     let file = event.target.files[0];
@@ -75,10 +84,16 @@ export class SignupComponent implements OnInit {
     };
   }
 
+  /**
+   * This method turn isHobbieSectionCliked value true when hobby section is clicked.
+   */
   onClick(): void{
     this.isHobbieSectionCliked = true;
   }
 
+  /**
+   * This method is used to register the new user to the application.
+   */
   resgister():void{
     
     this.user.name = `${this.firstName} ${this.lastName}`;

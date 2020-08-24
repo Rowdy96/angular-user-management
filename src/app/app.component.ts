@@ -9,15 +9,18 @@ import { Router } from '@angular/router';
   styleUrls: ['./app.component.css']
 })
 export class AppComponent implements DoCheck{
+  
   currentUser: User;
 
-  constructor(private accountService: AccountService,private router: Router){
+  constructor(private accountService: AccountService,private router: Router){}
 
-  }
   ngDoCheck(): void{
     this.currentUser = this.accountService.currentUser;
   }
 
+  /**
+   * This method is used to logout user from the application.
+   */
   logout(): void{
     this.accountService.currentUser = new User();
     this.router.navigate(['login']);

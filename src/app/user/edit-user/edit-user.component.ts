@@ -34,6 +34,10 @@ export class EditUserComponent implements OnInit {
     )
   }
 
+  /**
+   * Add the hobbie into the user hobbie list.
+   * @param event is used to get hobbie.
+   */
   add(event): void {
     const input = event.input;
     const value = event.value;
@@ -47,6 +51,10 @@ export class EditUserComponent implements OnInit {
     }
   }
 
+  /**
+   * Removes the hobbie from user hobbie list.
+   * @param hobbie is hobbie name.
+   */
   remove(hobbie: string): void {
     const index = this.user.hobbies.indexOf(hobbie);
 
@@ -55,6 +63,10 @@ export class EditUserComponent implements OnInit {
     }
   }
 
+  /**
+   * Get image from the user and convert it into base64.
+   * @param event is get image file.
+   */
   getImageFile(event): void{
     let file = event.target.files[0];
     let reader = new FileReader();
@@ -67,6 +79,9 @@ export class EditUserComponent implements OnInit {
     };
   }
 
+  /**
+   * Save the edited user detais.
+   */
   save(): void{
     this.userService.updateUser(this.user).subscribe(
      res => {

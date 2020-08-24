@@ -25,7 +25,11 @@ export class UserListComponent implements OnInit {
       this.dataSource = new MatTableDataSource(this.userList);
     });
   }
-
+ 
+  /**
+   * This method is used to navigate edit user page.
+   * @param id of user.
+   */
   onClick(id: number): void{
    this.router.navigate(['users/edit-user',id]); 
   }
