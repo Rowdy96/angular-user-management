@@ -7,5 +7,5 @@ export class User{
     dateOfBirth: Date;
     gender: string;
     hobbies: string[];
-
+    token: string;
 }

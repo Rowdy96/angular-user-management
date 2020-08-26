@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { User } from 'src/app/models/user.model';
-import { UserService } from '../user.service'
 import { MatTableDataSource } from '@angular/material/table';
 import { Router } from '@angular/router';
+import { AccountService } from 'src/app/authentication-services/account.service';
 
 @Component({
   selector: 'app-user-list',
@@ -15,12 +15,12 @@ export class UserListComponent implements OnInit {
   displayedColumns: string[];
   dataSource: MatTableDataSource<User>;
 
-  constructor(private userService: UserService, private router: Router) {
+  constructor(private accountService: AccountService, private router: Router) {
     this.displayedColumns = ['photo','name', 'email', 'edit'];
   }
 
   ngOnInit(): void {
-    this.userService.getUseres().subscribe(res => {
+    this.accountService.getAllUser().subscribe(res => {
       this.userList = res;
       this.dataSource = new MatTableDataSource(this.userList);
     });

@@ -4,7 +4,7 @@
         <mat-card-title>Edit User</mat-card-title>
       </mat-card-header>
       <mat-card-content>
-        <form #edituder="ngForm">
+        <form #edituser="ngForm">
           <mat-form-field class="input-full-width">
             <mat-label>Name</mat-label>
             <input matInput placeholder="Name" [(ngModel)]="user.name" type="text" name="name" #userName="ngModel" required>
@@ -24,6 +24,8 @@
               <mat-radio-button class="example-margin" value="Male">Male</mat-radio-button>
               <mat-radio-button class="example-margin" value="Female">Female</mat-radio-button>
             </mat-radio-group>
+            <br>
+            <br>
             <mat-form-field>
               <mat-label>Date of Birth</mat-label>
               <input matInput [matDatepicker]="picker" [(ngModel)]="user.dateOfBirth" placeholder="choose a date" style="margin-left: 10;" name="dateOfBirth" #userDateOfBirth="ngModel" required>
@@ -59,7 +61,7 @@
         </form>
       </mat-card-content>
       <mat-card-actions>
-        <button mat-raised-button (click)="save()" color="primary">Save</button>
+        <button mat-raised-button (click)="save()" color="primary" [disabled]="!edituser.valid || user.hobbies?.length === 0">Save</button>
       </mat-card-actions>
     </mat-card>
   </div>

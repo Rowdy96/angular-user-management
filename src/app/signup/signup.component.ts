@@ -1,8 +1,8 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import {COMMA, ENTER} from '@angular/cdk/keycodes';
-import { User } from 'src/app/models/user.model'
-import { UserService } from '../user/user.service';
+import { User } from 'src/app/models/user.model';
+import { AccountService } from '../authentication-services/account.service';
 
 
 @Component({
@@ -10,7 +10,7 @@ import { UserService } from '../user/user.service';
   templateUrl: './signup.component.html',
   styleUrls: ['./signup.component.css']
 })
-export class SignupComponent {
+export class SignupComponent implements OnInit{
 
   firstName: string;
   lastName: string;
@@ -19,13 +19,13 @@ export class SignupComponent {
   selectable : boolean;
   removable : boolean;
   addOnBlur :  boolean;
-  imageBlob: string;
+  imageBase64: string;
   user: User;
   isHobbieSectionCliked: boolean;
-  
+  signUpError: string;
   readonly separatorKeysCodes: number[] = [ENTER, COMMA];
 
-  constructor(private router: Router , private userService: UserService) 
+  constructor(private router: Router , private accountService: AccountService) 
   {
     this.firstName = '';
     this.lastName = '';
@@ -35,6 +35,11 @@ export class SignupComponent {
     this.removable = true;
     this.selectable = true;
     this.isHobbieSectionCliked = false;
+    this.signUpError= '';
+  }
+
+  ngOnInit(): void {
+    
   }
 
   /**
@@ -76,8 +81,8 @@ export class SignupComponent {
     let reader = new FileReader();
     reader.readAsDataURL(file);
     reader.onload = () => {
-      this.imageBlob = reader.result.toString();
-      this.user.photo = this.imageBlob;
+      this.imageBase64 = reader.result.toString();
+      this.user.photo = this.imageBase64;
     };
     reader.onerror = function (error) {
       console.log('Error: ', error);
@@ -97,12 +102,13 @@ export class SignupComponent {
   resgister():void{
     
     this.user.name = `${this.firstName} ${this.lastName}`;
-    this.userService.addUser(this.user).subscribe(
+    this.user.hobbies = this.hobbies;
+    this.accountService.register(this.user).subscribe(
       res => {
-        this.router.navigate(['login']);
+        this.router.navigate(['/login']);
       },
       err =>{
-
+        this.signUpError= err;
       }
     );
   }

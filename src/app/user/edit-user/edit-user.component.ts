@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { User } from 'src/app/models/user.model';
-import { UserService } from '../user.service';
 import { ENTER, COMMA } from '@angular/cdk/keycodes';
-import { Router } from '@angular/router';
+import { Router, ActivatedRoute } from '@angular/router';
+import { AccountService } from 'src/app/authentication-services/account.service';
 
 @Component({
   selector: 'app-edit-user',
@@ -17,9 +17,9 @@ export class EditUserComponent implements OnInit {
   removable : boolean;
   addOnBlur :  boolean;
   separatorKeysCodes: number[];
-  constructor(private userService: UserService, private router: Router) { 
+  constructor(private route: ActivatedRoute,private accountService: AccountService, private router: Router) { 
     this.user = new User();
-    this.id = 1;
+    this.id = +this.route.snapshot.params['id'];
     this.addOnBlur = true;
     this.removable = true;
     this.selectable = true;
@@ -27,7 +27,7 @@ export class EditUserComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.userService.getUser(this.id).subscribe(
+    this.accountService.getUserById(this.id).subscribe(
       res =>{
         this.user = res;
       }
@@ -74,7 +74,7 @@ export class EditUserComponent implements OnInit {
     reader.onload = () => {
       this.user.photo = reader.result.toString();
     };
-    reader.onerror = function (error) {
+    reader.onerror = (error) => {
       console.log('Error: ', error);
     };
   }
@@ -83,7 +83,7 @@ export class EditUserComponent implements OnInit {
    * Save the edited user detais.
    */
   save(): void{
-    this.userService.updateUser(this.user).subscribe(
+    this.accountService.updateUser(this.id,this.user).subscribe(
      res => {
        this.router.navigate(['users']);
      }

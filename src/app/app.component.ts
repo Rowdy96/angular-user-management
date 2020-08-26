@@ -1,4 +1,4 @@
-import { Component, DoCheck } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { User } from './models/user.model';
 import { AccountService } from './authentication-services/account.service';
 import { Router } from '@angular/router';
@@ -8,21 +8,22 @@ import { Router } from '@angular/router';
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.css']
 })
-export class AppComponent implements DoCheck{
+export class AppComponent implements OnInit{
   
   currentUser: User;
 
-  constructor(private accountService: AccountService,private router: Router){}
+  constructor(private accountService: AccountService,private router: Router){
+    this.currentUser = new User();
+  }
 
-  ngDoCheck(): void{
-    this.currentUser = this.accountService.currentUser;
+  ngOnInit(): void{
+    this.accountService.currentUser.subscribe(x=> this.currentUser = x);
   }
 
   /**
    * This method is used to logout user from the application.
    */
   logout(): void{
-    this.accountService.currentUser = new User();
-    this.router.navigate(['login']);
+    this.accountService.logout();
   }
 }
