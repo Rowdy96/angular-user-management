@@ -3,16 +3,16 @@
   </button>
   <span>Home</span>
   <span class="example-spacer"></span>
-  <button mat-button  *ngIf="currentUser !== null">
+  <button mat-button  *ngIf="currentUser">
      {{currentUser.name}}
   </button>
-  <button mat-button *ngIf="currentUser !== null" (click)="logout()">
+  <button mat-button *ngIf="currentUser" (click)="logout()">
     Logout
   </button>
-  <button mat-button *ngIf="currentUser === null" routerLink="login">
+  <button mat-button *ngIf="!currentUser" routerLink="login">
     Login
   </button>
-  <button mat-button *ngIf="currentUser === null"routerLink="signup">
+  <button mat-button *ngIf="!currentUser"routerLink="signup">
     Signup
   </button>
 </mat-toolbar>

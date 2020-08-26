@@ -86,7 +86,7 @@ export class AccountService {
             .pipe(map(x => {
                 // update stored user if the logged in user updated their own record
                 if (id == this.userValue.id) {
-                    // update local storage
+                    // update current user local storage
                     const user = { ...this.userValue, ...updatedUser };
                     localStorage.setItem('user', JSON.stringify(user));
 
