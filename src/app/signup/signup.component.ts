@@ -1,9 +1,9 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, EventEmitter } from '@angular/core';
 import { Router } from '@angular/router';
 import {COMMA, ENTER} from '@angular/cdk/keycodes';
 import { User } from 'src/app/models/user.model';
 import { AccountService } from '../authentication-services/account.service';
-
+import { AccessLevel, accessLevelList } from 'src/app/models/access-level.model';
 
 @Component({
   selector: 'app-signup',
@@ -23,6 +23,8 @@ export class SignupComponent implements OnInit{
   user: User;
   isHobbieSectionCliked: boolean;
   signUpError: string;
+  accessLevelList : AccessLevel[];
+  isAccessLevelSelected: boolean;
   readonly separatorKeysCodes: number[] = [ENTER, COMMA];
 
   constructor(private router: Router , private accountService: AccountService) 
@@ -30,12 +32,15 @@ export class SignupComponent implements OnInit{
     this.firstName = '';
     this.lastName = '';
     this.user =  new User();
+    this.user.accessLevel = [];
     this.user.gender = 'Male';
     this.hobbies = new Array<string>();
     this.removable = true;
     this.selectable = true;
     this.isHobbieSectionCliked = false;
+    this.isAccessLevelSelected = false;
     this.signUpError= '';
+    this.accessLevelList = JSON.parse(JSON.stringify(accessLevelList));
   }
 
   ngOnInit(): void {
@@ -94,6 +99,29 @@ export class SignupComponent implements OnInit{
    */
   onClick(): void{
     this.isHobbieSectionCliked = true;
+  }
+
+  /**
+   * This method is used to check or uncheck checkbox.
+   * @param isChecked is boolean value.
+   * @param accessLevel is name of the access level.
+   */
+  onCheck(isChecked:boolean,accessLevel: string):void{
+    
+    if(!this.isAccessLevelSelected){
+      this.isAccessLevelSelected = true;
+    }
+
+    if(isChecked){
+      this.user.accessLevel.push(accessLevel);
+    }
+    else
+    {
+      const index = this.user.accessLevel.indexOf(accessLevel);
+      if(index >-1){
+        this.user.accessLevel.splice(index,1);
+      }
+    }
   }
 
   /**

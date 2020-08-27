@@ -17,3 +17,12 @@ table{ width: 100%; }
 .input-full-width{
     width: 100%;
 }
+.checkbox-margin{
+  align-content: center;
+  align-items: center;
+  height: 60px;
+}
+
+.checkbox-section{
+    margin: 0 10px;
+}

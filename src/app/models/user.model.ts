@@ -6,6 +6,10 @@ export class User{
     photo: string;
     dateOfBirth: Date;
     gender: string;
+    role: string;
+    accessLevel: string[];
+    aboutMe: string;
     hobbies: string[];
+    aboutUser: string;
     token: string;
 }

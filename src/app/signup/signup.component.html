@@ -6,26 +6,26 @@
       <mat-card-content>
         <form #signup="ngForm" name="signup">
 
-          <mat-form-field class="input-full-width">
+          <mat-form-field  appearance="outline"  class="input-full-width">
             <mat-label>First Name</mat-label>
             <input matInput placeholder="First Name" #fName="ngModel" name="firstName" [(ngModel)]="firstName" type="text" required>
             <mat-error *ngIf="fName.errors?.required" >First Name is required</mat-error>
           </mat-form-field>
           
-          <mat-form-field class="input-full-width">
+          <mat-form-field  appearance="outline"  class="input-full-width">
             <mat-label>Last Name</mat-label>
             <input matInput placeholder="Last Name" #lName="ngModel" name="lastName" [(ngModel)]="lastName" type="text" required>
             <mat-error *ngIf="lName.errors?.required" >Last Name is required.</mat-error>
           </mat-form-field>
           
-          <mat-form-field class="input-full-width">
+          <mat-form-field  appearance="outline"  class="input-full-width">
             <mat-label>Email</mat-label>
             <input matInput placeholder="Email" #email="ngModel" name="email" [(ngModel)]="user.email" type="email" required email>
             <mat-error *ngIf="email.errors?.required" >Email is required.</mat-error>
             <mat-error *ngIf="email.errors?.email" >Email is invalid.</mat-error>
           </mat-form-field>
   
-          <mat-form-field class="input-full-width">
+          <mat-form-field  appearance="outline"  class="input-full-width">
             <mat-label>Password</mat-label>
             <input matInput placeholder="Password" #password="ngModel" name="password" [(ngModel)]="user.password" type="password" required minlength="8">
             <mat-error *ngIf="password.errors?.required" >Password is required.</mat-error>
@@ -40,7 +40,7 @@
               </mat-radio-group>
               <br>
               <br>
-            <mat-form-field>
+            <mat-form-field  appearance="outline" >
               <mat-label>Date of Birth</mat-label>
               <input matInput #dateOfBirth="ngModel" name="dateOfBirth" [matDatepicker]="picker" [(ngModel)]="user.dateOfBirth" placeholder="choose a date" style="margin-left: 10;" required>
               <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
@@ -48,8 +48,25 @@
               <mat-error *ngIf="dateOfBirth.untounched||dateOfBirth.errors?.required">Date of Birth is required.</mat-error>
             </mat-form-field>
           </section>
+
+          <mat-form-field appearance="outline">
+            <mat-label>User Role</mat-label>
+            <mat-select #role="ngModel" ngModel name="role" [(value)]="user.role" required>
+              <mat-option [disabled]="user.role">Choose a Role</mat-option>
+              <mat-option value="Admin">Admin</mat-option>
+              <mat-option value="Customer">Customer Care</mat-option>
+              <mat-option value="Marketing">Marketing</mat-option>
+            </mat-select>
+            <mat-error *ngIf="role.errors?.required">Role is required</mat-error>
+          </mat-form-field>
+
+          <section class="checkbox-section">
+              <mat-label>Access Level: </mat-label>
+              <mat-checkbox *ngFor="let accessLevel of accessLevelList" class="checkbox-margin" (change)="onCheck($event.checked,accessLevel.name)" [checked]="accessLevel.isChecked" >{{accessLevel.name}} </mat-checkbox>
+              <mat-error *ngIf="isAccessLevelSelected && user.accessLevel.length === 0">Atleast 1 access level is required</mat-error>
+          </section>
   
-          <mat-form-field class="input-full-width">
+          <mat-form-field  appearance="outline" class="input-full-width">
             <mat-chip-list #chipList>
               <mat-chip *ngFor="let hobbie of hobbies" [selectable]="selectable"
                        [removable]="removable" (removed)="remove(hobbie)">
@@ -76,12 +93,21 @@
           <br>
           <input #profilePhoto="ngModel" ngModel name="profilePhoto" type="file" accept="image/jpeg,image/png" (change)="getImageFile($event)" required/>
           <mat-error *ngIf="profilePhoto.touched && profilePhoto.errors?.required">Profile Picture is required.</mat-error>
-         </form> 
+          
+          <br>
+          <br>
+          <mat-form-field appearance="outline" class="input-full-width">
+            <mat-label>About Yourself</mat-label>
+            <textarea name="aboutUser`" #aboutUser="ngModel" matInput [(ngModel)]="user.aboutUser"></textarea>
+          </mat-form-field>
+
+        </form> 
           <br>
           <mat-error *ngIf="signUpError.length !== 0">{{signUpError}}</mat-error>
+
       </mat-card-content>
       <mat-card-actions>
-        <button mat-raised-button (click)="resgister()" color="primary" [disabled]="!signup.valid || hobbies.length === 0">Sign in</button>
+        <button mat-raised-button (click)="resgister()" color="primary" [disabled]="!signup.valid || hobbies.length === 0 || user.accessLevel.length === 0">Sign in</button>
       </mat-card-actions>
     </mat-card>
   </div>

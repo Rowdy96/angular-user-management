@@ -40,7 +40,9 @@ export class FakeBackendInterceptor implements HttpInterceptor {
         function authenticateUser(): Observable<HttpResponse<any>> {
             const { email, password } = body;
             const user = users.find(x => x.email.toLowerCase() === email.toLowerCase() && x.password === password);
-            if (!user) return error('Username or password is incorrect');
+            if (!user){
+                return error('Username or password is incorrect');
+            }
             user.token = 'fake-jwt-token';
             return ok(user);
         }

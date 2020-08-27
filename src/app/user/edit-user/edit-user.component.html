@@ -5,13 +5,13 @@
       </mat-card-header>
       <mat-card-content>
         <form #edituser="ngForm">
-          <mat-form-field class="input-full-width">
+          <mat-form-field appearance="outline" class="input-full-width">
             <mat-label>Name</mat-label>
             <input matInput placeholder="Name" [(ngModel)]="user.name" type="text" name="name" #userName="ngModel" required>
             <mat-error *ngIf="userName.errors?.required" >First Name is required.</mat-error>
           </mat-form-field>
           
-          <mat-form-field class="input-full-width">
+          <mat-form-field appearance="outline" class="input-full-width">
             <mat-label>Email</mat-label>
             <input matInput placeholder="Email" [(ngModel)]="user.email" type="email" name="email" #userEmail="ngModel" required email>
             <mat-error *ngIf="userEmail.errors?.required" >Email is required.</mat-error>
@@ -26,7 +26,7 @@
             </mat-radio-group>
             <br>
             <br>
-            <mat-form-field>
+            <mat-form-field appearance="outline">
               <mat-label>Date of Birth</mat-label>
               <input matInput [matDatepicker]="picker" [(ngModel)]="user.dateOfBirth" placeholder="choose a date" style="margin-left: 10;" name="dateOfBirth" #userDateOfBirth="ngModel" required>
               <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
@@ -34,8 +34,24 @@
               <mat-error *ngIf="userDateOfBirth.untounched||userDateOfBirth.errors?.required">Date of Birth is required.</mat-error>
             </mat-form-field>
           </section>
+
+          <mat-form-field appearance="outline">
+            <mat-label>User Role</mat-label>
+            <mat-select [(value)]="user.role">
+              <mat-option [disabled]="user.role">Choose a Role</mat-option>
+              <mat-option value="Admin">Admin</mat-option>
+              <mat-option value="Customer">Customer Care</mat-option>
+              <mat-option value="Marketing">Marketing</mat-option>
+            </mat-select>
+          </mat-form-field>
+
+          <section class="checkbox-section">
+            <label>Access Level: </label>
+            <mat-checkbox *ngFor="let accessLevel of accessLevels" class="checkbox-margin" (change)="onCheck($event.checked,accessLevel.name)" [checked]="accessLevel.isChecked">{{accessLevel.name}} </mat-checkbox>
+            <mat-error *ngIf="user.accessLevel?.length === 0">Atleast 1 access level is required</mat-error>
+          </section>
   
-          <mat-form-field class="input-full-width">
+          <mat-form-field appearance="outline" class="input-full-width">
             <mat-chip-list #chipList>
               <mat-chip *ngFor="let hobbie of user.hobbies" [selectable]="selectable"
                        [removable]="removable" (removed)="remove(hobbie)">
@@ -58,10 +74,17 @@
           <br>
           <input name="profilePhoto" #profilePhoto="ngModel" ngModel type="file" accept="image/jpeg,image/png" (change)="getImageFile($event)"/>
           <mat-error *ngIf="profilePhoto.touched && profilePhoto.errors?.required">Profile Picture is required.</mat-error>
+        
+          <br>
+          <br>
+          <mat-form-field appearance="outline" class="input-full-width">
+            <mat-label>About Yourself</mat-label>
+            <textarea name="aboutUser" #aboutUser matInput [(ngModel)]="user.aboutUser"></textarea>
+          </mat-form-field>
         </form>
       </mat-card-content>
       <mat-card-actions>
-        <button mat-raised-button (click)="save()" color="primary" [disabled]="!edituser.valid || user.hobbies?.length === 0">Save</button>
+        <button mat-raised-button (click)="save()" color="primary" [disabled]="!edituser.valid || user.hobbies?.length === 0 || user.accessLevel?.length === 0">Save</button>
       </mat-card-actions>
     </mat-card>
   </div>
